@@ -63,3 +63,4 @@ We have below test scopes:
   generally we called integration testing.
 - Test code under `test/st` the code need to be run with a real Milvus server,
   generally we called that acceptance testing.
+test

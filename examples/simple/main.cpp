@@ -17,7 +17,7 @@
 
 int
 main(int argc, char* argv[]) {
-    printf("Example start...\n");
+    printfx("Example start...\n");
 
     auto client = milvus::MilvusClient::Create();
 
