@@ -26,11 +26,11 @@ operator==(const proto::schema::FieldData& lhs, const BoolFieldData& rhs) {
     if (lhs.field_name() != rhs.Name()) {
         return false;
     }
-    if (not lhs.has_scalars()) {
+    if (! lhs.has_scalars()) {
         return false;
     }
     const auto& scalars = lhs.scalars();
-    if (not scalars.has_bool_data()) {
+    if (! scalars.has_bool_data()) {
         return false;
     }
     const auto& scalars_data = scalars.bool_data().data();
@@ -45,11 +45,11 @@ operator==(const proto::schema::FieldData& lhs, const Int8FieldData& rhs) {
     if (lhs.field_name() != rhs.Name()) {
         return false;
     }
-    if (not lhs.has_scalars()) {
+    if (! lhs.has_scalars()) {
         return false;
     }
     const auto& scalars = lhs.scalars();
-    if (not scalars.has_int_data()) {
+    if (! scalars.has_int_data()) {
         return false;
     }
     const auto& scalars_data = scalars.int_data().data();
@@ -64,11 +64,11 @@ operator==(const proto::schema::FieldData& lhs, const Int16FieldData& rhs) {
     if (lhs.field_name() != rhs.Name()) {
         return false;
     }
-    if (not lhs.has_scalars()) {
+    if (! lhs.has_scalars()) {
         return false;
     }
     const auto& scalars = lhs.scalars();
-    if (not scalars.has_int_data()) {
+    if (! scalars.has_int_data()) {
         return false;
     }
     const auto& scalars_data = scalars.int_data().data();
@@ -83,11 +83,11 @@ operator==(const proto::schema::FieldData& lhs, const Int32FieldData& rhs) {
     if (lhs.field_name() != rhs.Name()) {
         return false;
     }
-    if (not lhs.has_scalars()) {
+    if (! lhs.has_scalars()) {
         return false;
     }
     const auto& scalars = lhs.scalars();
-    if (not scalars.has_int_data()) {
+    if (! scalars.has_int_data()) {
         return false;
     }
     const auto& scalars_data = scalars.int_data().data();
@@ -102,11 +102,11 @@ operator==(const proto::schema::FieldData& lhs, const Int64FieldData& rhs) {
     if (lhs.field_name() != rhs.Name()) {
         return false;
     }
-    if (not lhs.has_scalars()) {
+    if (! lhs.has_scalars()) {
         return false;
     }
     const auto& scalars = lhs.scalars();
-    if (not scalars.has_long_data()) {
+    if (! scalars.has_long_data()) {
         return false;
     }
     const auto& scalars_data = scalars.long_data().data();
@@ -121,11 +121,11 @@ operator==(const proto::schema::FieldData& lhs, const FloatFieldData& rhs) {
     if (lhs.field_name() != rhs.Name()) {
         return false;
     }
-    if (not lhs.has_scalars()) {
+    if (! lhs.has_scalars()) {
         return false;
     }
     const auto& scalars = lhs.scalars();
-    if (not scalars.has_float_data()) {
+    if (! scalars.has_float_data()) {
         return false;
     }
     const auto& scalars_data = scalars.float_data().data();
@@ -140,11 +140,11 @@ operator==(const proto::schema::FieldData& lhs, const DoubleFieldData& rhs) {
     if (lhs.field_name() != rhs.Name()) {
         return false;
     }
-    if (not lhs.has_scalars()) {
+    if (! lhs.has_scalars()) {
         return false;
     }
     const auto& scalars = lhs.scalars();
-    if (not scalars.has_double_data()) {
+    if (! scalars.has_double_data()) {
         return false;
     }
     const auto& scalars_data = scalars.double_data().data();
@@ -159,11 +159,11 @@ operator==(const proto::schema::FieldData& lhs, const StringFieldData& rhs) {
     if (lhs.field_name() != rhs.Name()) {
         return false;
     }
-    if (not lhs.has_scalars()) {
+    if (! lhs.has_scalars()) {
         return false;
     }
     const auto& scalars = lhs.scalars();
-    if (not scalars.has_string_data()) {
+    if (! scalars.has_string_data()) {
         return false;
     }
     const auto& scalars_data = scalars.string_data().data();
@@ -178,7 +178,7 @@ operator==(const proto::schema::FieldData& lhs, const BinaryVecFieldData& rhs) {
     if (lhs.field_name() != rhs.Name()) {
         return false;
     }
-    if (not lhs.has_vectors()) {
+    if (! lhs.has_vectors()) {
         return false;
     }
     size_t dim = 0;
@@ -210,7 +210,7 @@ operator==(const proto::schema::FieldData& lhs, const FloatVecFieldData& rhs) {
     if (lhs.field_name() != rhs.Name()) {
         return false;
     }
-    if (not lhs.has_vectors()) {
+    if (! lhs.has_vectors()) {
         return false;
     }
     size_t dim = 0;

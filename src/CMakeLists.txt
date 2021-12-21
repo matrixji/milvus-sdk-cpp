@@ -21,11 +21,23 @@ include_directories(proto-gen)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/impl impl_files)
 include(proto-gen/proto-gen.cmake) # milvus_sdk_proto_files
 
+set(milvus_sdk_library milvus_sdk_static)
+add_library(milvus_sdk_static STATIC
+        ${impl_files}
+        ${milvus_sdk_proto_files}
+        )
+set_target_properties(milvus_sdk_static PROPERTIES OUTPUT_NAME milvus_sdk)
+target_link_libraries(milvus_sdk_static grpc++)
+add_dependencies(milvus_sdk_static protoc grpc_cpp_plugin)
+
+if (!MSVC)
 add_library(milvus_sdk SHARED
         ${impl_files}
         ${milvus_sdk_proto_files}
         )
-
 target_link_libraries(milvus_sdk grpc++)
+add_dependencies(milvus_sdk protoc grpc_cpp_plugin)
+set(milvus_sdk_library ${milvus_sdk_library} milvus_sdk)
+endif()
 
-install(TARGETS milvus_sdk DESTINATION lib)
+install(TARGETS ${milvus_sdk_library} DESTINATION lib)

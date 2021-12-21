@@ -51,6 +51,10 @@ else ()
 endif ()
 
 
+set(GRPC_SOURCE_REPOSITORY "https://github.com/grpc/grpc.git")
+set(GRPC_SOURCE_VERSION_TAG "v1.43.0")
+
+
 # Openssl required for grpc
 if (CMAKE_HOST_APPLE)
     execute_process(
@@ -62,14 +66,25 @@ if (CMAKE_HOST_APPLE)
     set(OPENSSL_ROOT_DIR ${USER_OPENSSL_PATH})
 endif (CMAKE_HOST_APPLE)
 
-find_package(OpenSSL REQUIRED)
+if (MSVC)
+else ()
+    find_package(OpenSSL REQUIRED)
+endif()
 
 
 # grpc
-FetchContent_Declare(
-    grpc
-    URL ${GRPC_SOURCE_URL}
-)
+if (MSVC)
+    FetchContent_Declare(
+        grpc
+        GIT_REPOSITORY ${GRPC_SOURCE_REPOSITORY}
+        GIT_TAG ${GRPC_SOURCE_VERSION_TAG}
+    )
+else ()
+    FetchContent_Declare(
+        grpc
+        URL ${GRPC_SOURCE_URL}
+    )
+endif()
 
 FetchContent_Declare(
     googletest
@@ -79,6 +94,9 @@ FetchContent_Declare(
 # enable grpc
 if(NOT grpc_POPULATED)
     FetchContent_Populate(grpc)
-    set(gRPC_SSL_PROVIDER "package" CACHE INTERNAL "Provider of ssl library")
+    if (MSVC)
+    else ()
+        set(gRPC_SSL_PROVIDER "package" CACHE INTERNAL "Provider of ssl library")
+    endif()
     add_subdirectory(${grpc_SOURCE_DIR} ${grpc_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
