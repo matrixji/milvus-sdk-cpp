@@ -1,0 +1,41 @@
+Name: libmilvus
+Version: {{{ git_dir_version }}}
+Release: 1%{?dist}
+Summary: C++ client for milvus 2.0
+
+License: Apache
+URL: https://github.com/milvus-io/milvus-sdk-cpp
+VCS:        {{{ git_dir_vcs }}}
+Source:     {{{ git_dir_pack }}}
+
+%description
+C++ client for milvus 2.0
+
+%prep
+{{{ git_dir_setup_macro }}}
+
+%build
+mkdir -p build
+cd build
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=%{buildroot}%{_prefix} ..
+make -j $(nproc)
+
+%install
+cd build
+make install
+
+%files
+%{_libdir}/libmilvus_sdk.so
+
+%package devel
+Summary: C++ client headers for milvus 2.0
+Requires: libmilvus
+
+%description devel
+C++ client headers for milvus 2.0
+
+%files devel
+%{_includedir}/milvus
+
+%changelog
+{{{ git_dir_changelog }}}
