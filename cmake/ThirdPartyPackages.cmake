@@ -61,20 +61,6 @@ else ()
     set(NLOHMANN_JSON_SOURCE_URL "https://github.com/nlohmann/json/archive/refs/tags/v3.11.2.tar.gz")
 endif ()
 
-# Openssl required for grpc
-if (CMAKE_HOST_APPLE)
-    execute_process(
-        COMMAND brew --prefix openssl@3
-        OUTPUT_VARIABLE USER_OPENSSL_PATH
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-        COMMAND_ERROR_IS_FATAL ANY
-    )
-    set(OPENSSL_ROOT_DIR ${USER_OPENSSL_PATH})
-endif (CMAKE_HOST_APPLE)
-
-find_package(OpenSSL REQUIRED)
-
-
 # grpc
 FetchContent_Declare(
     grpc
@@ -95,7 +81,6 @@ FetchContent_Declare(
 # enable grpc
 if(NOT grpc_POPULATED)
     FetchContent_Populate(grpc)
-    set(gRPC_SSL_PROVIDER "package" CACHE INTERNAL "Provider of ssl library")
     add_subdirectory(${grpc_SOURCE_DIR} ${grpc_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 

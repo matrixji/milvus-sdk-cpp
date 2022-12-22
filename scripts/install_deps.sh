@@ -29,8 +29,7 @@ install_deps_for_ubuntu_common() {
         ${SUDO} DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true apt-get -y install tzdata
     fi
 
-    ${SUDO} apt-get -y install python2.7 gpg wget gcc g++ ccache make \
-                       libssl-dev iwyu lcov git
+    ${SUDO} apt-get -y install python2.7 gpg wget gcc g++ ccache make iwyu lcov git
 
     # for cmake >= 3.12
     current_cmake_version=$(get_cmake_version)
@@ -70,21 +69,21 @@ install_deps_for_ubuntu_2204() {
 
 install_deps_for_fedora_common() {
     check_sudo
-    ${SUDO} dnf -y install gcc gcc-c++ python2 gpg wget ccache make openssl-devel which lcov git rpm-build
+    ${SUDO} dnf -y install gcc gcc-c++ python2 gpg wget ccache make which lcov git rpm-build
     ${SUDO} dnf -y install cmake
 }
 
 install_deps_for_centos_8() {
     check_sudo
     ${SUDO} dnf -y install epel-release
-    ${SUDO} dnf -y install gcc gcc-c++ python2 gpg wget ccache make openssl-devel which lcov git rpm-build
+    ${SUDO} dnf -y install gcc gcc-c++ python2 gpg wget ccache make which lcov git rpm-build
     ${SUDO} dnf -y install cmake
 }
 
 install_deps_for_centos_7() {
     check_sudo
     ${SUDO} yum -y install epel-release centos-release-scl
-    ${SUDO} yum -y install devtoolset-7-gcc devtoolset-7-gcc-c++ python gpg wget ccache make openssl-devel which lcov git rpm-build
+    ${SUDO} yum -y install devtoolset-7-gcc devtoolset-7-gcc-c++ python gpg wget ccache make which lcov git rpm-build
 
     # for cmake >= 3.12, using cmake3 from epel
     current_cmake_version=$(get_cmake_version)
@@ -97,7 +96,7 @@ install_deps_for_centos_7() {
 
 install_deps_for_macos() {
     if [ -x "$(command -v brew)" ] ; then
-        brew install wget lcov llvm openssl@3 cmake ccache
+        brew install wget lcov llvm cmake ccache
     else
         echo 'Detect using macos but brew seems not installed.'
         exit 1
