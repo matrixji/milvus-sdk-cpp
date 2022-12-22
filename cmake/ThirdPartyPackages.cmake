@@ -16,7 +16,7 @@
 
 
 include(FetchContent)
-
+set(FETCHCONTENT_QUIET OFF)
 
 # Ensure that a default make is set
 if ("${MAKE}" STREQUAL "")
@@ -37,27 +37,28 @@ find_package(Threads REQUIRED)
 # ----------------------------------------------------------------------
 # External source default urls
 
-if (DEFINED ENV{MILVUS_GRPC_URL})
-    set(GRPC_SOURCE_URL "$ENV{MILVUS_GRPC_URL}")
+if (DEFINED ENV{MILVUS_GRPC_REPO})
+    set(GRPC_REPO "$ENV{MILVUS_GRPC_REPO}")
 else ()
-    set(GRPC_SOURCE_URL
-            "https://github.com/milvus-io/grpc-milvus/archive/master.zip")
+    set(GRPC_REPO "https://github.com/grpc/grpc")
+endif ()
+
+if (DEFINED ENV{MILVUS_GRPC_RELEASE_TAG})
+    set(GRPC_RELEASE_TAG "$ENV{MILVUS_GRPC_RELEASE_TAG}")
+else ()
+    set(GRPC_RELEASE_TAG "v1.51.1")
 endif ()
 
 if (DEFINED ENV{MILVUS_GTEST_URL})
     set(GTEST_SOURCE_URL "$ENV{MILVUS_GTEST_URL}")
 else ()
-    # default using 1.11, for legacy compilers using 1.10
-    set(GTEST_SOURCE_URL "https://github.com/google/googletest/archive/release-1.11.0.tar.gz")
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-        set(GTEST_SOURCE_URL "https://github.com/google/googletest/archive/release-1.10.0.tar.gz")
-    endif()
+    set(GTEST_SOURCE_URL "https://github.com/google/googletest/archive/release-1.12.1.tar.gz")
 endif ()
 
 if (DEFINED ENV{MILVUS_NLOHMANN_JSON_URL})
     set(NLOHMANN_JSON_SOURCE_URL "${ENV{MILVUS_NLOHMANN_JSON_URL}")
 else ()
-    set(NLOHMANN_JSON_SOURCE_URL "https://github.com/nlohmann/json/archive/refs/tags/v3.10.5.tar.gz")
+    set(NLOHMANN_JSON_SOURCE_URL "https://github.com/nlohmann/json/archive/refs/tags/v3.11.2.tar.gz")
 endif ()
 
 # Openssl required for grpc
@@ -77,7 +78,8 @@ find_package(OpenSSL REQUIRED)
 # grpc
 FetchContent_Declare(
     grpc
-    URL ${GRPC_SOURCE_URL}
+    GIT_REPOSITORY ${GRPC_REPO}
+    GIT_TAG ${GRPC_RELEASE_TAG}
 )
 
 FetchContent_Declare(
@@ -100,5 +102,5 @@ endif()
 # header only nlohmann json
 if(NOT nlohmann_json_POPULATED)
     FetchContent_Populate(nlohmann_json)
+    include_directories(${nlohmann_json_SOURCE_DIR}/include)
 endif()
-include_directories(${nlohmann_json_SOURCE_DIR}/include)

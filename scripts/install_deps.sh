@@ -1,7 +1,7 @@
 #!/bin/sh
 
 check_sudo() {
-    if [ -x "$(command -v sudo)" ] ; then
+    if sudo -V 2>/dev/null ; then
         export SUDO=sudo
     else
         export SUDO=
@@ -83,8 +83,8 @@ install_deps_for_centos_8() {
 
 install_deps_for_centos_7() {
     check_sudo
-    ${SUDO} yum -y install epel-release
-    ${SUDO} yum -y install gcc gcc-c++ python gpg wget ccache make openssl-devel which lcov git rpm-build
+    ${SUDO} yum -y install epel-release centos-release-scl
+    ${SUDO} yum -y install devtoolset-7-gcc devtoolset-7-gcc-c++ python gpg wget ccache make openssl-devel which lcov git rpm-build
 
     # for cmake >= 3.12, using cmake3 from epel
     current_cmake_version=$(get_cmake_version)
@@ -126,11 +126,7 @@ if uname | grep -wq Linux ; then
             install_deps_for_centos_8
         elif grep -q 'Red Hat Enterprise Linux release 8' /etc/redhat-release ; then
             install_deps_for_centos_8
-        elif grep -q 'Fedora release 34' /etc/redhat-release ; then
-            install_deps_for_fedora_common
-        elif grep -q 'Fedora release 35' /etc/redhat-release ; then
-            install_deps_for_fedora_common
-        elif grep -q 'Fedora release 36' /etc/redhat-release ; then
+        elif grep -q 'Fedora release' /etc/redhat-release ; then
             install_deps_for_fedora_common
         fi
     fi
